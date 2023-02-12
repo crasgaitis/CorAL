@@ -12,7 +12,7 @@ import pyfirmata
 import time
 # import tensorflow as tf
 
-board = pyfirmata.Arduino('/dev/tty.usbmodem14201')
+board = pyfirmata.Arduino('COM5')
 
 st.markdown(
      f"""
