@@ -58,7 +58,7 @@ while True:
     st.write(df_temp)
 
     pred = clf.predict(df_temp)[0]
-    
+    st.write(pred)
     if pred[0] == 0:
          st.write('Student understands material!')
     else:
