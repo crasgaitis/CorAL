@@ -10,6 +10,8 @@ import random
 import re
 # import tensorflow as tf
 
+
+
 st.markdown(
      f"""
      <style>
@@ -18,8 +20,7 @@ st.markdown(
             background: url("https://i.imgur.com/yF9sYx6.jpg");
             background-size: cover
         }}
-        
-    img{{display: block; margin: 0 auto}}
+
         
      </style>
      """,
@@ -40,50 +41,54 @@ st.image(image)
 # user input
 st.write("Upload neural activity here:")
 
-userdf = st.file_uploader("upload file", type={"csv"})
-if userdf is not None:
-    userdf = pd.read_csv(userdf)
-st.write('Raw data:')
-st.write(userdf)
+try:
+    userdf = st.file_uploader("upload file", type={"csv"})
+    if userdf is not None:
+        userdf = pd.read_csv(userdf)
+    st.write('Raw data:')
+    st.write(userdf)
 
-def consolidate(freq_min, freq_max, brainwave):
-  pattern = re.compile(rf".*[{freq_min}-{freq_max}]Hz.*")
-  columns_to_include = [col for col in userdf.columns if re.match(pattern, col)]
+    def consolidate(freq_min, freq_max, brainwave):
+        pattern = re.compile(rf".*[{freq_min}-{freq_max}]Hz.*")
+        columns_to_include = [col for col in userdf.columns if re.match(pattern, col)]
 
-  bw_average = userdf[columns_to_include].mean(axis=1)
-  bw_median = np.array([np.median(bw_average)])
+        bw_average = userdf[columns_to_include].mean(axis=1)
+        bw_median = np.array([np.median(bw_average)])
 
-  # take delta average across all channels, and median of this average across timestamps
-  df_temp[f"{brainwave}"] = bw_median
+        # take delta average across all channels, and median of this average across timestamps
+        df_temp[f"{brainwave}"] = bw_median
 
 
-while True:
-    df_temp = pd.DataFrame()
-    df = pd.DataFrame()
+    while True:
+        df_temp = pd.DataFrame()
+        df = pd.DataFrame()
 
-    pattern = re.compile("^Aux|^f_")
-    unwanted = [col for col in userdf.columns if re.match(pattern, col)]
-    userdf = userdf.drop(columns=unwanted)
-    userdf = userdf.drop('info', axis=1)
+        pattern = re.compile("^Aux|^f_")
+        unwanted = [col for col in userdf.columns if re.match(pattern, col)]
+        userdf = userdf.drop(columns=unwanted)
+        userdf = userdf.drop('info', axis=1)
 
-    consolidate(1, 3, "Delta")
-    consolidate(4, 7, "Theta")
-    consolidate(8, 9, "Alpha1")
-    consolidate(10, 11, "Alpha2")
-    consolidate(12, 20, "Beta1")
-    consolidate(20, 29, "Beta2")
-    
-    col1, col2 = st.columns(2)
+        consolidate(1, 3, "Delta")
+        consolidate(4, 7, "Theta")
+        consolidate(8, 9, "Alpha1")
+        consolidate(10, 11, "Alpha2")
+        consolidate(12, 20, "Beta1")
+        consolidate(20, 29, "Beta2")
+        
+        col1, col2 = st.columns(2)
 
-    with col1:
-        st.write('Converted values:')
+        with col1:
+            st.write('Converted values:')
 
-    with col2:
-        st.write(df_temp)
+        with col2:
+            st.write(df_temp)
 
-    pred = clf.predict(df_temp)[0]
-    st.write(pred)
-    if pred == 0:
-         st.write('Student understands material!')
-    else:
-         st.write('Student is confused.')
+        pred = clf.predict(df_temp)[0]
+        st.write(pred)
+        if pred == 0:
+            st.write('Student understands material!')
+        else:
+            st.write('Student is confused.')
+
+except:
+    pass
