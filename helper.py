@@ -129,7 +129,7 @@ def compute_feature_vector(eegdata, fs):
 
     feature_vector = np.log10(feature_vector)
 
-    return PSD #feature_vector
+    return NFFT #feature_vector
 
 
 def nextpow2(i):
