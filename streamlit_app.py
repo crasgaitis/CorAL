@@ -19,6 +19,7 @@ st.markdown(
             background-size: cover
         }}
         
+    img{{display: block; margin: 0 auto}}
         
      </style>
      """,
