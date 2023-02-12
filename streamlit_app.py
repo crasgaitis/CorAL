@@ -8,9 +8,11 @@ import pickle
 import joblib
 import random
 import re
+import pyfirmata
+import time
 # import tensorflow as tf
 
-
+board = pyfirmata.Arduino('/dev/tty.usbmodem14201')
 
 st.markdown(
      f"""
@@ -82,8 +84,11 @@ try:
         # st.write(pred)
         if pred == 0:
             st.write('Student understands material!')
+            board.digital[13].write(1)
+            
         else:
             st.write('Student is confused.')
+
 
 except:
     pass
