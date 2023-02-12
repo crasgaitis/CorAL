@@ -75,16 +75,11 @@ try:
         consolidate(12, 20, "Beta1")
         consolidate(20, 29, "Beta2")
         
-        col1, col2 = st.columns(2)
-
-        with col1:
-            st.write('Converted values:')
-
-        with col2:
-            st.write(df_temp)
+        st.write('Converted values:')
+        st.write(df_temp)
 
         pred = clf.predict(df_temp)[0]
-        st.write(pred)
+        # st.write(pred)
         if pred == 0:
             st.write('Student understands material!')
         else:
