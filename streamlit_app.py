@@ -7,13 +7,15 @@ from PIL import Image
 import pickle
 import joblib
 import random
-import tensorflow as tf
+# import tensorflow as tf
 
 # loading
 
-# full_pipeline = joblib.load('pipeline.joblib')
+with open("model_new.pkl", 'rb') as file:
+    clf = pickle.load(file)
 
-model = tf.keras.models.load_model('model.h5')
+
+#model = tf.keras.models.load_model('model.h5')
 
 st.title('CorAL')
  
