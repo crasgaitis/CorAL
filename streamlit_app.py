@@ -18,10 +18,9 @@ with open("model_new.pkl", 'rb') as file:
 #model = tf.keras.models.load_model('model.h5')
 
 st.title('CorAL')
- 
 
 # user input
-st.sidebar.subheader("Upload neural activity here:")
+st.write("Upload neural activity here:")
 
 userdf = st.file_uploader("upload file", type={"csv"})
 if userdf is not None:
