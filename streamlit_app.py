@@ -33,7 +33,8 @@ with open("model_new.pkl", 'rb') as file:
 
 #model = tf.keras.models.load_model('model.h5')
 
-st.title('CorAL')
+image = Image.open('https://i.imgur.com/2MKneIG.jpg')
+st.image(image)
 
 # user input
 st.write("Upload neural activity here:")
@@ -41,6 +42,7 @@ st.write("Upload neural activity here:")
 userdf = st.file_uploader("upload file", type={"csv"})
 if userdf is not None:
     userdf = pd.read_csv(userdf)
+st.write('Raw data:')
 st.write(userdf)
 
 def consolidate(freq_min, freq_max, brainwave):
@@ -69,8 +71,14 @@ while True:
     consolidate(10, 11, "Alpha2")
     consolidate(12, 20, "Beta1")
     consolidate(20, 29, "Beta2")
+    
+    col1, col2 = st.columns(2)
 
-    st.write(df_temp)
+    with col1:
+        st.write('Converted values:')
+
+    with col2:
+        st.write(df_temp)
 
     pred = clf.predict(df_temp)[0]
     st.write(pred)
