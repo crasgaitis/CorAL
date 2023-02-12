@@ -10,6 +10,21 @@ import random
 import re
 # import tensorflow as tf
 
+st.markdown(
+     f"""
+     <style>
+     
+    .stApp {{
+            background: url("https://i.imgur.com/yF9sYx6.jpg");
+            background-size: cover
+        }}
+        
+        
+     </style>
+     """,
+     unsafe_allow_html=True
+ )
+
 # loading
 
 with open("model_new.pkl", 'rb') as file:
