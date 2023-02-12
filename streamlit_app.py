@@ -9,10 +9,12 @@ import joblib
 import random
 import re
 import pyfirmata
+import serial
 import time
 # import tensorflow as tf
 
-board = pyfirmata.Arduino('COM5')
+# board = pyfirmata.Arduino('COM5')
+arduino = serial.Serial(port = "COM5", timeout=0)
 
 st.markdown(
      f"""
@@ -82,12 +84,13 @@ try:
 
         pred = clf.predict(df_temp)[0]
         # st.write(pred)
+        arduino.write(str.encode(pred))
         if pred == 0:
             st.write('Student understands material!')
-            board.digital[13].write(1)
             
         else:
             st.write('Student is confused.')
+            # board.digital[13].write(1)
 
 
 except:
