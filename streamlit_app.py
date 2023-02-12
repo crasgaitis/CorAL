@@ -33,7 +33,7 @@ with open("model_new.pkl", 'rb') as file:
 
 #model = tf.keras.models.load_model('model.h5')
 
-image = Image.open('https://i.imgur.com/2MKneIG.jpg')
+image = Image.open('logo.jpg')
 st.image(image)
 
 # user input
